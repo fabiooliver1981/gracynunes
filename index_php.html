@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gracy Nunes</title>
+    <style>
+
+        #playButton {
+            position: absolute; /* Posiciona o botão de forma absoluta */
+            top: 20px; /* Distância do topo */
+            right: 20px; /* Distância da esquerda */
+        }
+
+        body {
+            background-image: url('img2.jpeg'), url('img4.jpeg'); /* Substitua pelo caminho da sua imagem */
+            background-size: 30%, 35%; /* Faz a imagem cobrir toda a tela */
+            background-position: left, right; /* Centraliza a imagem */
+            background-repeat: no-repeat; /* Não repete a imagem */
+            display: flex; /* Usa flexbox para centralizar */
+            flex-direction: column; /* Coloca os elementos em coluna */
+            justify-content: center; /* Centraliza horizontalmente */
+            align-items: center; /* Centraliza verticalmente */
+            height: 100vh; /* Altura da tela */
+            margin: 0; /* Remove margens padrão */
+            background-color: black; /* Cor de fundo opcional */
+            color: white
+        }
+
+        p {
+            text-align: center; /* Centraliza o texto do título */
+            color: red; /* Cor rosa do título */
+        }
+        
+        h2 {
+            text-align: center; /* Centraliza o texto do título */
+            color: purple; /* Cor rosa do título */
+            font-style: italic; /* Deixa a fonte em cursivo */
+        }
+        
+        h3 {
+            text-align: center; /* Centraliza o texto do título */
+            color: pink; /* Cor rosa do título */
+            font-style: italic; /* Deixa a fonte em cursivo */
+        }
+
+        form {
+            background-color: black; /* Cor de fundo do formulário */
+            color: pink; /* Cor do texto para que seja visível em fundo preto */
+            padding: 15px; /* Espaçamento interno */
+            border-radius: 8px; /* Bordas arredondadas */
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5); /* Sombra */
+            max-width: 500px; /* Largura máxima do formulário */
+            width: 100%; /* Largura total em telas menores */
+        }
+
+        h1 {
+            margin: 01px 0; /* Adiciona margem acima e abaixo */
+            text-align: center; /* Centraliza o texto do título */
+            color: rgb(235, 0, 220); /* Cor rosa do título */
+            font-style: italic; /* Deixa a fonte em cursivo */
+        }
+
+
+        hr {
+            border: none; /* Remove a borda padrão */
+            height: 2px; /* Altura da linha */
+            background-color: pink; /* Cor da linha */
+            margin: 10px 0; /* Margem acima e abaixo */
+        }
+
+        label {
+            display: block; /* Faz os rótulos ocuparem toda a linha */
+            margin: 10px 0 5px; /* Margens para os rótulos */
+        }
+
+        input[type="text"], 
+        input[type="tel"], 
+        input[type="email"] {
+            width: 95%; /* Largura total dos campos de entrada */
+            padding: 10px; /* Espaçamento interno dos campos */
+            border: 1px solid #ccc; /* Borda dos campos */
+            border-radius: 4px; /* Bordas arredondadas */
+        }
+
+        input[type="submit"] {
+            background-color: rgb(225, 6, 68); /* Cor do botão */
+            color: black; /* Cor do texto do botão */
+            border: none; /* Remove a borda do botão */
+            padding: 10px; /* Espaçamento interno do botão */
+            border-radius: 4px; /* Bordas arredondadas do botão */
+            cursor: pointer; /* Muda o cursor para indicar que é clicável */
+            width: 100%; /* Largura total do botão */
+        }
+
+        input[type="submit"]:hover {
+            background-color: purple; /* Cor ao passar o mouse */
+        }
+
+        /* Media query para telas menores */
+        @media (max-width: 600px) {
+            body {
+                padding: 10px; /* Adiciona padding em telas pequenas */
+            }
+
+            form {
+                padding: 15px; /* Reduz o padding do formulário */
+            }
+        }
+    </style>
+</head>
+
+<body>
+    
+    <audio id="myAudio" autoplay loop>
+        <source src="music1.mp3" type="audio/mpeg">
+        
+    </audio>
+
+    <button id="playButton" onclick="playAudio()">Tocar Música</button>
+
+    <img src="logo.jpeg" alt="Descrição da Imagem" style="max-width: 28%; height: auto; margin-bottom: 2px;"> <!-- Imagem no topo da página -->
+
+    <form action="#" method="post">
+        <h2>Formulário de Contato</h1>
+        <hr> <!-- Separador abaixo do título -->
+        <label for="nome">Nome:</label>
+        <input type="text" id="nome" name="nome" required>
+
+        <label for="telefone">Telefone:</label>
+        <input type="tel" id="telefone" name="telefone" required placeholder="(xx) xxxxx-xxxx" oninput="mascaraTelefone(this)">
+
+        <label for="email">E-mail:</label>
+        <input type="email" id="email" name="email" required>
+
+        <label for="mensagem">Mensagem:</label>
+        <input type="text" id="mensagem" name="mensagem" required>
+
+        <hr>
+
+        <input type="submit" value="Enviar">
+    </form>
+    
+    <p id="contador">Visitantes: 0</p>
+ 
+    <script>
+            function mascaraTelefone(telefone) {
+                const valor = telefone.value.replace(/\D/g, ''); // Remove caracteres não numéricos
+                const formato = '(##) #####-####'; // Formato desejado
+
+                let resultado = '';
+                let j = 0;
+
+                for (let i = 0; i < formato.length; i++) {
+                    if (formato[i] === '#') {
+                        if (j < valor.length) {
+                            resultado += valor[j];
+                            j++;
+                        }
+                    } else {
+                        resultado += formato[i];
+                    }
+                }
+
+                telefone.value = resultado;
+            }
+
+            function validateEmail() {
+                const email = document.getElementById('email').value;
+                const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; // Regex para validar e-mail
+                if (!regex.test(email)) {
+                    alert('Por favor, insira um e-mail válido.');
+                    return false; // Impede o envio do formulário
+                }
+                return true; // Permite o envio do formulário
+            }            
+
+        // Verifica se o contador já existe no localStorage
+        let visitantes = localStorage.getItem('contadorVisitantes');
+
+        // Se não existir, inicializa com 0
+        if (!visitantes) {
+            visitantes = 0;
+        }
+
+        // Converte para número e incrementa
+        visitantes = parseInt(visitantes) + 1;
+
+        // Armazena o novo valor no localStorage
+        localStorage.setItem('contadorVisitantes', visitantes);
+
+        // Exibe o contador na página
+        document.getElementById('contador').textContent = 'Visitantes: ' + visitantes;
+        
+        function playAudio() {
+            const audio = document.getElementById('myAudio');
+            audio.play();
+        }
+    
+    </script>
+
+</body>
+</html>
